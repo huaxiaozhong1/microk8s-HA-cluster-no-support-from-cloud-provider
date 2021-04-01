@@ -4,34 +4,21 @@
 </div>
 -----------------
 
-<span style="color: green">O</span>n 
-my a few <span style="color: green"> previous projects </span>, 
-such as, **"image recognition"** [(1)](https://github.com/huaxiaozhong1/tensorflow-lite-apps-on-raspberry-pi-3),  [(2)](https://github.com/huaxiaozhong1/complete-procedure-to-train-and-recognize-you-by-raspberry-pi-3-and-tensorflow-lite) and [(3)](https://github.com/huaxiaozhong1/YourOwnModel-TfLite-RaspberryPi), [**"speech recognization"**](https://github.com/huaxiaozhong1/Tensorflow-SparkFunEdge-FullLifeCycel-for-SequenceModel), and [**"watching sensor from web"**](https://github.com/huaxiaozhong1/Watching-Sensors-with-ESP32--Expressjs-Twilio-Sync-for-IoT), we implemented a few techniques of 
-<span style="color: green"> IoT </span>,
-which we could summarize as 
-<span style="color: green"> "AI on device" </span>
- and 
- <span style="color: green"> "device supported by server"</span>.
+**O**n my a few **previous projects**, 
+such as, ["image recognition" (1)](https://github.com/huaxiaozhong1/tensorflow-lite-apps-on-raspberry-pi-3),  [(2)](https://github.com/huaxiaozhong1/complete-procedure-to-train-and-recognize-you-by-raspberry-pi-3-and-tensorflow-lite) and [(3)](https://github.com/huaxiaozhong1/YourOwnModel-TfLite-RaspberryPi), [**"speech recognization"**](https://github.com/huaxiaozhong1/Tensorflow-SparkFunEdge-FullLifeCycel-for-SequenceModel), and [**"watching sensor from web"**](https://github.com/huaxiaozhong1/Watching-Sensors-with-ESP32--Expressjs-Twilio-Sync-for-IoT), we implemented a few techniques of **IoT**, which we could summarize as **"AI on device"** and **"device supported by server"**.
 
-<span style="color: green">F</span>or
-quite a lot of realistic implementing around IoT devices, a reliable server-support is necessary. For example, thinking about an AI-on-device application, if "confidence" inferred on device isn't high enough, we'd better to send data to server for more powerful processing, then more accurate confidence could be calculated on server, and used on device eventually. 
+**F**or quite a lot of realistic implementing around IoT devices, a reliable server-support is necessary. For example, thinking about an AI-on-device application, if "confidence" inferred on device isn't high enough, we'd better to send data to server for more powerful processing, then more accurate confidence could be calculated on server, and used on device eventually. 
 
-<span style="color: green">T</span>he
-kind of application was explored with [one of my projects](https://github.com/huaxiaozhong1/rails-tensorflow-image-recog-demo), indeed. Namely, the data (an image, on the case), which is to be processed intelligently, is sent to server that will be processed over there by an AI application, based on Tensorflow. Finally the client receives the result from server. 
+**T**he kind of application was explored with [one of my projects](https://github.com/huaxiaozhong1/rails-tensorflow-image-recog-demo), indeed. Namely, the data (an image, on the case), which is to be processed intelligently, is sent to server that will be processed over there by an AI application, based on Tensorflow. Finally the client receives the result from server. 
 
-<span style="color: green"> H</span>owever
-the project, mentioned above, just provided server applications as a solution. It didn't take care of necessary features of server itself. For example, if the server is put into real operation, it shall guarantee to run long-time without any exceptional stop. On the other words, it shall be a 
-<span style="color: green"> high availability cluster </span>.
+**H**owever the project, mentioned above, just provided server applications as a solution. It didn't take care of necessary features of server itself. For example, if the server is put into real operation, it shall guarantee to run long-time without any exceptional stop. On the other words, it shall be a 
+**high availability cluster**.
 
-<span style="color: green"> M</span>orever
-some businesses, for example micro enterprises, require to deploy/control all resources of their running system efficiently, even if they have big client-volume, such as, IoT devices. So, such an on-premise solution will be required: all server software works in a closed cluster with all data stored inside. And very likely, they don't want to rely on supports from cloud provider. 
+**M**orever some businesses, for example micro enterprises, require to deploy/control all resources of their running system efficiently, even if they have big client-volume, such as, IoT devices. So, such an on-premise solution will be required: all server software works in a closed cluster with all data stored inside. And very likely, they don't want to rely on supports from cloud provider. 
 
-In the project, we will walk through all the steps on: how to create a cluster providing an 
-<span style="color: green"> external access </span>
-that any device could visit from out of the cluster, even if some machines organizing the cluster may be powered off.
+**I**n the project, we will walk through all the steps on: how to create a cluster providing an external access that any device could visit from out of the cluster, even if some machines organizing the cluster may be powered off.
 
-<span style="color: green"> T</span>his
-project is implemented based on [Microk8s](https://microk8s.io/), which is "the smallest, fastest, fully-conformant" [Kubernetes](https://kubernetes.io/).
+**T**his project is implemented based on [Microk8s](https://microk8s.io/), which is "the smallest, fastest, fully-conformant" [Kubernetes](https://kubernetes.io/).
 
 <div align="center">
   <br>
@@ -39,17 +26,15 @@ project is implemented based on [Microk8s](https://microk8s.io/), which is "the 
   <br>
 </div>
 
-### <span style="color: green">1, Prepare machines</span>
+### 1, Prepare machines
 
-I 
-<span style="color: green"> prepared </span>
- 4 PCs, on my case, to combine the cluster. These were the "machines" that I just found at my storage :-)
+I **prepared** 4 PCs, on my case, to combine the cluster. These were the "machines" that I just found at my storage :-)
 
 You may use more machines depending on your own option.
 
 To access the cluster, another machine may be needed to run "http" request, which is out of the cluster. I prepared a raspberry Pi 3B+, on my case. 
 
-### <span style="color: green">2, Prepare test app</span>
+### 2, Prepare test app
 
 Supposing Ubuntu 18.04+ runs on your machines and docker.io is installed, the command "docker build" will create an app image, called "hello", by calling Dockerfile in sub-folder "hello". 
 
@@ -71,7 +56,7 @@ $ sudo docker save hello:local > hello.local.tar
 ```
 The procedure may need a few minutes.
 
-### <span style="color: green">3, Install microk8s</span>
+### 3, Install microk8s
 
 On every PC, install microk8s and necessary add-ons.
 
@@ -98,7 +83,7 @@ So, if your downloading is successful, you could find 2 more files are added on 
 $ sudo snap ack microk8s_2035.assert
 $ sudo snap install microk8s_2035.snap --classic
 ```
-<span style="color: green"> Note: </span> on worse case, the downloading may not be able to complete. Then you could contact to me to get the 2 file from me :-) The snap package is little bit big to uploaded to my git repository. 
+**Note:** on worse case, the downloading may not be able to complete. Then you could contact to me to get the 2 file from me :-) The snap package is little bit big to uploaded to my git repository. 
 
 Now, please check status until "microk8s is running".
 ```
@@ -181,7 +166,7 @@ Eventually it should be READY as "1/1".
 
 Now we have launched a fundamental microk8s cluster. Let's install some necessary addons at step 4 - 6.  
 
-### <span style="color: green"> 4, Enable addon "dns" </span>
+### 4, Enable addon "dns"
 
 It is commonly required by other addons.
 ```
@@ -197,7 +182,7 @@ kube-system      pod/coredns-86f78bb79c-p554n                  1/1     Running  
 ```
 Checking all elements' status as we did at step 3. When all elements reach READY as "1/1", go to step 5. 
 
-### <span style="color: green"> 5, Enable addon "ingress" </span>
+### 5, Enable addon "ingress"
 
 The addon will enable traffic to come into your Kubernetes cluster from outside.
 ```
@@ -241,15 +226,11 @@ microk8s ctr image import ingress-nginx-controller.v0.35.tar
 ```
 Now you could check all elements again. It is very likely that all of them are working.
 
-<span style="color: green"> Note: </span> if you couldn't find any ingress image by calling "docker search", just contact to me. I can share it with you :-)
+**Note:** if you couldn't find any ingress image by calling "docker search", just contact to me. I can share it with you :-)
 
-### <span style="color: green">6, Enable add-on "metallb"</span>
+### 6, Enable add-on "metallb"
 
-MetalLB allows you to create your own service in Kubernetes cluster. It is a "LoaderBalancer" service, which can distribute workload among all nodes inside cluster. As a result to work with "metallb", when you launch 
-<span style="color: green"> an app </span>
- at a "physical" machine, it could be 
-<span style="color: green"> open to external world </span>
- as "an IP address and an accessible port". It is the obvious advantage over some other clusters that have to work under support from "cloud providers", such as GCP, AWS, and etc. 
+MetalLB allows you to create your own service in Kubernetes cluster. It is a "LoaderBalancer" service, which can distribute workload among all nodes inside cluster. As a result to work with "metallb", when you **launch an app** at a "physical" machine, it could be **open to external world** as "an IP address and an accessible port". It is the obvious advantage over some other clusters that have to work under support from "cloud providers", such as GCP, AWS, and etc. 
 
 Now checking your physical router, to know the IP-address-pool that was set for machines and devices to connect. On my case, the pool ranges from 192.168.0.100 to 192.168.168.0.199. So, the 4 machines connected to the router have IPs as: 192.168.0.100 - 192.168.0.103.
 Then, I would assign MetalLB an IP-address-pool as 192.168.0.120 - 192.168.0.127. So, the following command is typed:
@@ -260,13 +241,11 @@ Go through the similar way, that we did at step 5, to check and guarantee the ad
 
 On my case, a metallb pod will be created by pulling image "metallb/controller:v0.9.3". 
 
-<span style="color: green"> Note: </span> if your pod meets issue with pulling the image, feel free to get the image from me.
+**Note:** if your pod meets issue with pulling the image, feel free to get the image from me.
 
-### <span style="color: green">7, Set up HA cluster</span>
+### 7, Set up HA cluster
 
-Select a node as 
-<span style="color: green"> master node </span>
-. It is 192.168.0.100, on my case. Run the following command at the machine:
+Select a node as **master node**. It is 192.168.0.100, on my case. Run the following command at the machine:
 ```
 $ microk8s add-node
 From the node you wish to join to this cluster, run the following:
@@ -287,10 +266,7 @@ high-availability: yes
   datastore standby nodes: 192.168.0.103:19001
 ...
 ```
-It shows that there have been 3 
-<span style="color: green"> "datastore master nodes" </span>
-in this HA cluster. And there is 1 more node as 
-<span style="color: green"> "datastore standby node" </span>.
+It shows that there have been 3 **"datastore master nodes"** in this HA cluster. And there is 1 more node as **"datastore standby node"**.
 
 As mentioned at steps above, you still need to check every elements' states so that we could know if all elements work.
 ```
@@ -308,7 +284,7 @@ node-101            Ready    <none>   10d   v1.20.2-34+350770ed07a558
 ```
 On my case, the 4 machines are all READY, at the end.
 
-### <span style="color: green"> 8, Deploy your own app in the cluster </span>
+### 8, Deploy your own app in the cluster
 
 We have built a web app at step 2. Now let's deploy it.
 ```
@@ -330,7 +306,7 @@ default     service/hello        LoadBalancer   10.152.183.185   192.168.0.120  
 ```
 Now we know that the service "hello" could be visited via external IP (192.168.0.120 on port 8081) from out of the cluster.
 
-### <span style="color: green"> 9, Verify the HA cluster </span>
+### 9, Verify the HA cluster
 
 A machine, which is out of the cluster, will be used to visit an app exposed by the cluster.
 
@@ -339,11 +315,7 @@ On my case, a raspberry Pi 3B+, which doesn't join the cluster, is used to execu
 $ curl http://192.168.0.120:8081
 Hello World
 ```
-Let's 
-<span style="color: green"> power off </span>
-192.168.0.100, the original 
-<span style="color: green"> "master node" </span>
-we selected while setting the cluster up. 
+Let's **power off** 192.168.0.100, the original **"master node"** we selected while setting the cluster up. 
 
 Then, check cluster status again from any machine that is still working:
 ```
@@ -355,8 +327,7 @@ high-availability: yes
 ...
 ```
 
-Now we witness that 
-<span style="color: green"> the cluster could be working continuously even if the original "master" node is shutdown! </span>
+Now we witness that **the cluster could be working continuously even if the original "master" node is shutdown!**
 
 Try to access app "hello", from Pi, via 192.168.0.120 (with port 8081) again:
 ```
@@ -367,34 +338,25 @@ It is verified that the app's IP, exposed by cluster, does continuously work. It
 
 The machine of 192.168.0.100 will come back to work as soon as it is powered on again.
 
-### <span style="color: green"> 10, Main goals </span>
+### 10, Main goals
 
 The repository is to create a cluster, which will reach main goals as below.
 
 #### 10.1, 
 
-To run the cluster, with 
-<span style="color: green"> no support from cloud providers </span>
-, such as GCE, AWS, is not must.
+To run the cluster, with **no support from cloud providers**, such as GCE, AWS, is not must.
 
 #### 10.2, 
 
-The cluster is a high-available (HA) platform to reliably run with 
-<span style="color: green"> no interrupt when some nodes stop working </span>
-. So, it is pretty much suitable for micro enterprises to develop their internet-based business, to support their remote customers' devices. For example, a family of IoT devices which are running AI apps on remote sites, request inference for some objects in much higher "confidence". At the time, the cluster could work for these devices remotely.
+The cluster is a high-available (HA) platform to reliably run with **no interrupt when some nodes stop working**. So, it is pretty much suitable for micro enterprises to develop their internet-based business, to support their remote customers' devices. For example, a family of IoT devices which are running AI apps on remote sites, request inference for some objects in much higher "confidence". At the time, the cluster could work for these devices remotely.
 
 #### 10.3, 
 
-We could develop, deploy and maintain the kind of service in 
-<span style="color: green"> efficient resource and cost </span>
-.
+We could develop, deploy and maintain the kind of service in **efficient resource and cost**.
 
-### <span style="color: green"> 11, To-dos </span>
+### 11, To-dos
 
-[Microk8s](https://microk8s.io/docs) does aim to provide "the best 
-
-<span style="color: green"> production grade Kubernetes </span>
-for application". So our solution shall implement the following features.
+[Microk8s](https://microk8s.io/docs) does aim to provide "the best **production grade Kubernetes** for application". So our solution shall implement the following features.
 
 #### 11.1, 
 
